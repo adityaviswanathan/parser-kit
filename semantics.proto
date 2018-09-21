@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+// Encodes the intent semantics of some input text. Semantics are modeled as a
+// syntax parse over the set of types defined here. All unparsed input is
+// skipped in the output, so the parse only contains relations over these types.
+// Pipeline:
+// 1. Email text blob -> Action email classifier -> Y/N (is input email actionable?) 
+// 2. Email text blob -> Chunker -> Email sentences
+// ------- THIS IS WHERE THIS SERVICE BEGINS -------
+// 3. Sentence -> Intent parser -> Intent parse tree (unstructured sentence -> structured parse)
+// ------- THIS IS WHERE THIS SERVICE ENDS -------
+// 4. Email's intent parse trees -> Serializer -> Write email/intents to disk (db)
+//
+// Training pipeline:
+// 1. Define parse semantics using this proto's Semantics class.
+// 2. Unlabeled data set -> labeler.py -> Labeled data set
+// 3. Labeled data set -> training_generator.py -> Training/Testing set split (TODO)
+// 4. Training set -> model_generator.py -> Language model
+//
+// Runtime pipeline:
+// 1. HTTP server listens for inbound requests.
+// 2. Language model, Input text -> parser.py -> Syntax parse
+// 3. Syntax parse -> serializer.py -> Parse tree protobuf
+// 4. Reply with Parse tree protobuf over HTTP
+
+message SemanticType {
+    optional string name = 1;
+}
+
+message Semantics {
+    repeated SemanticType types = 1;
+}

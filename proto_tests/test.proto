@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+message TestEnum {
+    enum E {
+        FIRST = 0;
+        SECOND = 1;
+        THIRD = 2;
+    }
+}
+
+message TestMessage {
+    optional string teststring = 1;
+    optional int64 testint = 2;
+    optional float testfloat = 3;
+    optional bool testbool = 4;
+}
+
+message TestComposition {
+   repeated TestMessage testmessages = 1;
+   optional TestEnum.E testenum = 2 [default = FIRST];
+}
