@@ -48,4 +48,6 @@ $ python parser.py --text "how many wood could a wood chuck chuck if a wood chuc
 
 ## HTTP interface (WIP)
 
-`parser-kit` wraps a static language model with a HTTP server that handles inbound blobs of texts and returns their parses according to ***M***. Parses will be serialized via protobuf so clients will need to import the parse proto defined in this repo (TODO).
+`parser-kit` wraps a static language model with a HTTP server that handles inbound text blobs and returns their parses according to ***M***. Parses will be serialized via protobuf so clients will need to import the parse proto defined in this repo.
+
+Clients can serialize/deserialize messages to the server by using interfaces in `semantics.proto`.

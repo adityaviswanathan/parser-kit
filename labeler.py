@@ -11,7 +11,6 @@ required arguments:
 optional arguments:
   -h, --help         show this help message and exit
 '''
-
 __author__ = 'Aditya Viswanathan'
 __email__ = 'aditya@adityaviswanathan.com'
 
@@ -20,27 +19,11 @@ import pickle
 import semantics_pb2 as semantics
 
 
-def get_semantic_types():
-    custom_semantics = semantics.Semantics()
-    # TODO(aditya): Should we do runtime semantics definition like below?
-    # Alternative is to statically define semantics in proto as enums.
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'NOISE'
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'ROOT'
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'PLACE'
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'QUALITY'
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'ATTRIBUTE'
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'TIME'
-    semantic_type = custom_semantics.types.add()
-    semantic_type.name = 'LOCATION'
+def get_parse_types():
     semantic_type_names = []
-    for s_type in custom_semantics.types:
-        semantic_type_names.append(s_type.name)
+    for semantic_type, _ in semantics.ParsedToken().DESCRIPTOR.enum_values_by_name.items():
+        semantic_type_names.append(semantic_type)
+    print(semantic_type_names)
     return semantic_type_names
 
 
@@ -49,7 +32,7 @@ def validate_selection(input_str, num_selections, selection_name):
         print('Please enter a valid value')
         return False
     try:
-        if int(input_str) not in range(len(get_semantic_types())):
+        if int(input_str) not in range(len(get_parse_types())):
             print('Please enter a valid %s between 0 and %d' %
                   (selection_name, num_selections - 1))
             return False
@@ -60,12 +43,14 @@ def validate_selection(input_str, num_selections, selection_name):
 
 
 def label_example(example, example_idx):
+    # TODO(aditya): This is way too naive, should have better token matching logic to decide on the words.
+    # E.g. "San Francisco" should be one token while "isn't" should be two.
     words = example.split()
     print('Labeling example %d: %s' % (example_idx + 1, example))
     input_prompt = '%d) %s'
     cursor_prompt = '\n---> '
     semantic_type_input_prompt = '\n'.join(input_prompt % (
-        idx, val) for idx, val in enumerate(get_semantic_types())) + cursor_prompt
+        idx, val) for idx, val in enumerate(get_parse_types())) + cursor_prompt
     modifier_input_prompt = '\n'.join(input_prompt % (idx, val)
                                       for idx, val in enumerate(words)) + cursor_prompt
     words_data = [] # cleaner (debug) representation
@@ -80,8 +65,8 @@ def label_example(example, example_idx):
         while not user_input_valid:
             user_input = input(semantic_type_input_prompt)
             user_input_valid = validate_selection(
-                user_input, len(get_semantic_types()), label_type)
-        word_data['semantic_type'] = get_semantic_types()[int(user_input)]
+                user_input, len(get_parse_types()), label_type)
+        word_data['semantic_type'] = get_parse_types()[int(user_input)]
         spacy_word_deps.append(word_data['semantic_type'])
         label_type = 'modifier'
         user_input_valid = False

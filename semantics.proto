@@ -19,14 +19,32 @@ syntax = "proto2";
 //
 // Runtime pipeline:
 // 1. HTTP server listens for inbound requests.
-// 2. Language model, Input text -> parser.py -> Syntax parse
-// 3. Syntax parse -> serializer.py -> Parse tree protobuf
-// 4. Reply with Parse tree protobuf over HTTP
+// 2. Language model, Input text -> parser.py -> Syntax parse protobuf
+// 3. Reply with Parse tree protobuf over HTTP
 
-message SemanticType {
-    optional string name = 1;
+// Request payload.
+message InputText {
+    optional string text = 1;
 }
 
-message Semantics {
-    repeated SemanticType types = 1;
+// Defines a single token.
+message ParsedToken {
+    // Entities the parser can bind tokens to.
+    enum E {
+        NOISE = 1;
+        ROOT = 2;
+        PLACE = 3;
+        QUALITY = 4;
+        ATTRIBUTE = 5;
+        TIME = 6;
+        LOCATION = 7;
+    }
+    optional string token = 1;
+    optional E type = 2;
+    repeated ParsedToken children = 3;
+}
+
+// Response payload.
+message ParseTree {
+    optional ParsedToken root = 1;
 }

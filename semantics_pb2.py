@@ -19,21 +19,63 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='semantics.proto',
   package='',
   syntax='proto2',
-  serialized_pb=_b('\n\x0fsemantics.proto\"\x1c\n\x0cSemanticType\x12\x0c\n\x04name\x18\x01 \x01(\t\")\n\tSemantics\x12\x1c\n\x05types\x18\x01 \x03(\x0b\x32\r.SemanticType')
+  serialized_pb=_b('\n\x0fsemantics.proto\"\x19\n\tInputText\x12\x0c\n\x04text\x18\x01 \x01(\t\"\xb3\x01\n\x0bParsedToken\x12\r\n\x05token\x18\x01 \x01(\t\x12\x1c\n\x04type\x18\x02 \x01(\x0e\x32\x0e.ParsedToken.E\x12\x1e\n\x08\x63hildren\x18\x03 \x03(\x0b\x32\x0c.ParsedToken\"W\n\x01\x45\x12\t\n\x05NOISE\x10\x01\x12\x08\n\x04ROOT\x10\x02\x12\t\n\x05PLACE\x10\x03\x12\x0b\n\x07QUALITY\x10\x04\x12\r\n\tATTRIBUTE\x10\x05\x12\x08\n\x04TIME\x10\x06\x12\x0c\n\x08LOCATION\x10\x07\"\'\n\tParseTree\x12\x1a\n\x04root\x18\x01 \x01(\x0b\x32\x0c.ParsedToken')
 )
 
 
 
+_PARSEDTOKEN_E = _descriptor.EnumDescriptor(
+  name='E',
+  full_name='ParsedToken.E',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='NOISE', index=0, number=1,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ROOT', index=1, number=2,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='PLACE', index=2, number=3,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='QUALITY', index=3, number=4,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ATTRIBUTE', index=4, number=5,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='TIME', index=5, number=6,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='LOCATION', index=6, number=7,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=139,
+  serialized_end=226,
+)
+_sym_db.RegisterEnumDescriptor(_PARSEDTOKEN_E)
 
-_SEMANTICTYPE = _descriptor.Descriptor(
-  name='SemanticType',
-  full_name='SemanticType',
+
+_INPUTTEXT = _descriptor.Descriptor(
+  name='InputText',
+  full_name='InputText',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='SemanticType.name', index=0,
+      name='text', full_name='InputText.text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -52,21 +94,67 @@ _SEMANTICTYPE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=19,
-  serialized_end=47,
+  serialized_end=44,
 )
 
 
-_SEMANTICS = _descriptor.Descriptor(
-  name='Semantics',
-  full_name='Semantics',
+_PARSEDTOKEN = _descriptor.Descriptor(
+  name='ParsedToken',
+  full_name='ParsedToken',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='types', full_name='Semantics.types', index=0,
-      number=1, type=11, cpp_type=10, label=3,
+      name='token', full_name='ParsedToken.token', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='ParsedToken.type', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=1,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='children', full_name='ParsedToken.children', index=2,
+      number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _PARSEDTOKEN_E,
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=47,
+  serialized_end=226,
+)
+
+
+_PARSETREE = _descriptor.Descriptor(
+  name='ParseTree',
+  full_name='ParseTree',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='root', full_name='ParseTree.root', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -82,28 +170,39 @@ _SEMANTICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=49,
-  serialized_end=90,
+  serialized_start=228,
+  serialized_end=267,
 )
 
-_SEMANTICS.fields_by_name['types'].message_type = _SEMANTICTYPE
-DESCRIPTOR.message_types_by_name['SemanticType'] = _SEMANTICTYPE
-DESCRIPTOR.message_types_by_name['Semantics'] = _SEMANTICS
+_PARSEDTOKEN.fields_by_name['type'].enum_type = _PARSEDTOKEN_E
+_PARSEDTOKEN.fields_by_name['children'].message_type = _PARSEDTOKEN
+_PARSEDTOKEN_E.containing_type = _PARSEDTOKEN
+_PARSETREE.fields_by_name['root'].message_type = _PARSEDTOKEN
+DESCRIPTOR.message_types_by_name['InputText'] = _INPUTTEXT
+DESCRIPTOR.message_types_by_name['ParsedToken'] = _PARSEDTOKEN
+DESCRIPTOR.message_types_by_name['ParseTree'] = _PARSETREE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-SemanticType = _reflection.GeneratedProtocolMessageType('SemanticType', (_message.Message,), dict(
-  DESCRIPTOR = _SEMANTICTYPE,
+InputText = _reflection.GeneratedProtocolMessageType('InputText', (_message.Message,), dict(
+  DESCRIPTOR = _INPUTTEXT,
   __module__ = 'semantics_pb2'
-  # @@protoc_insertion_point(class_scope:SemanticType)
+  # @@protoc_insertion_point(class_scope:InputText)
   ))
-_sym_db.RegisterMessage(SemanticType)
+_sym_db.RegisterMessage(InputText)
 
-Semantics = _reflection.GeneratedProtocolMessageType('Semantics', (_message.Message,), dict(
-  DESCRIPTOR = _SEMANTICS,
+ParsedToken = _reflection.GeneratedProtocolMessageType('ParsedToken', (_message.Message,), dict(
+  DESCRIPTOR = _PARSEDTOKEN,
   __module__ = 'semantics_pb2'
-  # @@protoc_insertion_point(class_scope:Semantics)
+  # @@protoc_insertion_point(class_scope:ParsedToken)
   ))
-_sym_db.RegisterMessage(Semantics)
+_sym_db.RegisterMessage(ParsedToken)
+
+ParseTree = _reflection.GeneratedProtocolMessageType('ParseTree', (_message.Message,), dict(
+  DESCRIPTOR = _PARSETREE,
+  __module__ = 'semantics_pb2'
+  # @@protoc_insertion_point(class_scope:ParseTree)
+  ))
+_sym_db.RegisterMessage(ParseTree)
 
 
 # @@protoc_insertion_point(module_scope)
